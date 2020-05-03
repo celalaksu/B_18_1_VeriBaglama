@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:VeriBaglama;assembly=VeriBaglama"
+             mc:Ignorable="d"
+             x:Class="VeriBaglama.RenklerSayfasi">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:Key="boxSize"
+                        x:TypeArguments="x:Double">
+                <On Platform="iOS, Android, UWP" Value="50" />
+            </OnPlatform>
+
+            <OnPlatform x:Key="rowHeight"
+                        x:TypeArguments="x:Int32">
+                <On Platform="iOS, Android, UWP" Value="60" />
+            </OnPlatform>
+
+            <local:DoubleToIntConverter x:Key="intConverter" />
+            
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ListView ItemsSource="{x:Static local:RenkIsimleri.ButunRenkler}"
+              RowHeight="{StaticResource rowHeight}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Padding="5, 5, 0, 5"
+                                 Orientation="Horizontal"
+                                 Spacing="15">
+
+                        <BoxView WidthRequest="{StaticResource boxSize}"
+                                 HeightRequest="{StaticResource boxSize}"
+                                 Color="{Binding Renk}" />
+
+                        <StackLayout Padding="5, 0, 0, 0"
+                                     VerticalOptions="Center">
+
+                            <Label Text="{Binding BilinenIsim}"
+                                   FontAttributes="Bold"
+                                   FontSize="Medium" />
+
+                            <StackLayout Orientation="Horizontal"
+                                         Spacing="0">
+                                <Label Text="{Binding Renk.R,
+                                       Converter={StaticResource intConverter},
+                                       ConverterParameter=255,
+                                       StringFormat='R={0:X2}'}" />
+
+                                <Label Text="{Binding Renk.G,
+                                       Converter={StaticResource intConverter},
+                                       ConverterParameter=255,
+                                       StringFormat=', G={0:X2}'}" />
+
+                                <Label Text="{Binding Renk.B,
+                                       Converter={StaticResource intConverter},
+                                       ConverterParameter=255,
+                                       StringFormat=', B={0:X2}'}" />
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
+    
+
+</ContentPage>
